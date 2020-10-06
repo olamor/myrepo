@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "olamor/testrep"
+    registry = "olamor/testrepo"
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
