@@ -1,27 +1,19 @@
-pipeline {
-  environment {
-    registry = "olamor/testrepo"
-    registryCredential = 'dockerhub'
-    dockerImage = ''
-  }
-  agent any
-  stages {
-    stage('Building image') {
-      steps{
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
-    }
+#!groovy
+// Check ub1 properties
+properties([disableConcurrentBuilds()])
 
-    stage('Deploy Image') {
-      steps{
-        script {
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-          }
+pipeline {
+    agent {
+        label 'master'
         }
-      }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        timestamps()
     }
-  }
+    stages {
+        steps {
+           echo " ============== start building image =================="
+               sh 'docker build . '
+        }
+    }
 }
