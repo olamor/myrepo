@@ -13,7 +13,7 @@ pipeline {
     stages {
         steps {
            echo " ============== start building image =================="
-               sh 'docker build . '
+               sh 'ls'
         }
     }
 }
